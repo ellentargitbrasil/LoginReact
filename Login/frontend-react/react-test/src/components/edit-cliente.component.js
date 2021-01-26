@@ -43,7 +43,7 @@ export default class EditCliente extends Component {
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
-            users: response.data.map(user => user.cnpj),
+            users: response.data.map(cnpj => cnpj.cnpj),
           })
         }
       })

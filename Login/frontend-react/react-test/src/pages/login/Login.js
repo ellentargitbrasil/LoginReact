@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import './Login.css'
 import axios from 'axios'
 import {history} from '../../history'
+import {login as signin} from '../../utils/auth'
 const Login = () =>{
     const handleSubmit = values => {
         axios.post('http://localhost:8000/v1/api/auth', values)
@@ -13,6 +14,7 @@ const Login = () =>{
                 localStorage.setItem('app-token', data)
                 history.push('/home')
             }
+           
         })
     }
 
@@ -20,6 +22,12 @@ const Login = () =>{
         email: yup.string().email().required(),
         password: yup.string().min(8).required(),  
     })
+
+    const handleSignIn = () =>{
+       signin('abc123')
+        history.push('/home')
+    }
+
     return(
     <>
     <h1>Login</h1>
@@ -38,7 +46,7 @@ const Login = () =>{
 
                 </ErrorMessage>
             </div>
-            <button className="Login-Btn" type = "submit">Login</button>
+            <button onClick={handleSignIn} className="Login-Btn" type = "submit">Login</button>
         </Form>
     </Formik>
 

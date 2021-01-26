@@ -21,6 +21,24 @@ export default class CreateUser extends Component {
       usuarios: ''
     }
   }
+   
+    componentDidMount() {
+      axios.get('http://localhost:5000/users/')
+        .then(response => {
+          if (response.data.length > 0) {
+            this.setState({
+              users: response.data.map(cnpj => cnpj.cnpj),
+              cnpj: response.data[0].cnpj
+            })
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+  
+    }
+  
+
 
   onChangeCnpj(e) {
     this.setState({
@@ -51,7 +69,7 @@ export default class CreateUser extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const cliente = {
+    const clientes = {
       cnpj: this.state.cnpj,
       razao_social:this.state.razao_social,
       dia:this.state.dia,
@@ -60,19 +78,12 @@ export default class CreateUser extends Component {
 
     }
 
-    console.log(cliente);
+    console.log(clientes);
 
-    axios.post('http://localhost:5000/users/add', cliente)
+    axios.post('http://localhost:5000/clientes/add', clientes)
       .then(res => console.log(res.data));
-
-    this.setState({
-      cnpj: '',
-      razao_social: '',
-      dia: 0,
-      horario: '',
-      usuarios: 0
-
-    })
+      window.location = '/list';
+    
   }
 
   render() {
@@ -139,5 +150,5 @@ export default class CreateUser extends Component {
       </div>
       
     )
-  }
-}
+    }
+} 

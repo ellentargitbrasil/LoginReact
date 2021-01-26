@@ -10,7 +10,7 @@ const Cliente = props => (
     <td>{props.cliente.horario}</td>
     <td>{props.cliente.usuarios}</td>
     <td>
-      {/* <Link to={"/edit/"+props.cliente._id}>edit</Link> | <a href="#" onClick={() => { props.deleteCliente(props.cliente._id) }}>delete</a> */}
+      { <Link to={"/list"+props.cliente._id}>edit</Link> | <a href="/list" onClick={() => { props.deleteCliente(props.cliente._id) }}>delete</a> }
     </td>
   </tr>
 )
@@ -25,7 +25,7 @@ export default class ClienteList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/cliente/')
+    axios.get('http://localhost:5000/clientes/')
       .then(response => {
         this.setState({ cliente: response.data })
       })
@@ -35,7 +35,7 @@ export default class ClienteList extends Component {
   }
 
   deleteCliente(id) {
-    axios.delete('http://localhost:5000/cliente/'+id)
+    axios.delete('http://localhost:5000/clientes/'+id)
       .then(response => { console.log(response.data)});
 
     this.setState({
@@ -52,7 +52,7 @@ export default class ClienteList extends Component {
   render() {
     return (
       <div>
-        <h3>Logged Clientes</h3>
+        <h3>Clientes cadastrados</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>
@@ -64,7 +64,7 @@ export default class ClienteList extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.clienteList() }
+            {this.clienteList()}
           </tbody>
         </table>
       </div>
